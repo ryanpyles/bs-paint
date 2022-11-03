@@ -15,7 +15,7 @@
  * To make the second one happen, the number to change
  * is the first argument to `repeat`, currently set at 10.
  */
-const gridWidth = 10;
+const gridWidth = 100;
 let count = 0;
 while (count <= gridWidth * gridWidth) {
   const canvas = document.querySelector('.canvas');
@@ -49,7 +49,13 @@ while (count <= gridWidth * gridWidth) {
 // Add queries for all your squares, palette colors, and brush here.
 // (Note the singular or plural used in that sentence!)
 
+let brush = document.querySelector('.current-brush');
+let palette = document.querySelectorAll('.palette div')
+let canvasSquares = document.querySelectorAll('.canvas div');
+let app = document.querySelector('.app');
 
+
+let isMouseDown = false;
 
 /****************************
  * EVENT LISTENER FUNCTIONS *
@@ -60,7 +66,46 @@ while (count <= gridWidth * gridWidth) {
 // empty at first, though a console.log just to know they're being
 // run as event listeners (after the next step is set up) isn't a
 // bad idea for testing purposes.
+brush.addEventListener('click', function(){
+  console.log('Brush!');
+})
 
+// for(let i = 0; i < palette.length; i++){
+//   palette[i].addEventListener('click', function(){
+//     console.log(palette[i].classList);
+//   })
+// }
+for(const color of palette){
+  color.addEventListener('click', function(){
+    console.log(color.classList);
+    brush.classList.replace(brush.classList[1], color.classList[1]);
+  })
+}
+
+for(let square of canvasSquares){
+ // square.addEventListener('click', function(){
+    //console.log(square.classList);
+  //   square.classList.replace(square.classList[1], brush.classList[1]);
+  // })
+  square.addEventListener('mouseover', function(){
+   if(isMouseDown === true){
+    square.classList.replace(square.classList[1], brush.classList[1]);
+  }
+})
+}
+
+
+app.addEventListener('mousedown', function(){
+  console.log('mouse down!')
+  isMouseDown = true;
+  console.log('isMouseDown: ' + isMouseDown);
+  
+})
+app.addEventListener('mouseup', function(){
+  console.log('mouse up!')
+  isMouseDown = false;
+  console.log('isMouseDown: ' + isMouseDown);
+})
 
 
 /**************************
